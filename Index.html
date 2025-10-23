@@ -1,0 +1,844 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آموزشگاه اختلال - دانشکده تخصصی ساخت ابزار با هوش مصنوعی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+        
+        :root {
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --accent: #00d4ff;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #e0e0e0;
+            --glow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--primary);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid var(--primary);
+            box-shadow: var(--glow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: var(--glow);
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-symbol {
+            margin-left: 10px;
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: var(--glow);
+            animation: fadeInUp 1s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-symbol {
+            margin-left: 15px;
+            font-size: 4rem;
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.4s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: var(--glow);
+        }
+        
+        /* Courses Section */
+        .courses {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-shadow: var(--glow);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-symbol {
+            margin: 0 15px;
+            font-size: 3rem;
+            color: var(--accent);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .course-card {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(5, 5, 5, 0.9));
+            border: 1px solid var(--secondary);
+            border-radius: 5px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary));
+            animation: scanline 3s linear infinite;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 255, 65, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .course-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .course-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .course-symbol {
+            margin-left: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .course-desc {
+            color: var(--light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+        
+        .course-price {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: left;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 3px;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+        
+        /* Registration Section */
+        .registration {
+            padding: 100px 0;
+            background-color: rgba(5, 5, 5, 0.7);
+        }
+        
+        .registration-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(5, 5, 5, 0.9));
+            border: 1px solid var(--primary);
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: var(--glow);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--secondary);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+        
+        select.form-control {
+            cursor: pointer;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-group input {
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-group label {
+            color: var(--light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .checkbox-group a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: var(--glow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--secondary);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-symbol {
+            margin-left: 10px;
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .copyright {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(5, 5, 5, 0.95));
+            border: 2px solid var(--primary);
+            max-width: 600px;
+            width: 90%;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: var(--glow);
+            position: relative;
+            animation: modalFadeIn 0.5s ease;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-symbol {
+            margin-left: 10px;
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
+        }
+        
+        .modal-body {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .modal-body p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .modal-footer {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .registration-form {
+                padding: 25px;
+            }
+            
+            .logo-symbol, .hero-symbol, .section-symbol, .course-symbol, .footer-symbol, .modal-symbol {
+                font-size: 1.5rem;
+            }
+            
+            .course-price {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas class="matrix-bg" id="matrix"></canvas>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">اختلال<span class="logo-symbol">⟁</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">خانه</a></li>
+                        <li><a href="#courses">دوره‌ها</a></li>
+                        <li><a href="#registration">ثبت نام</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>آموزشگاه اختلال<span class="hero-symbol">⟁</span></h1>
+                <p>دانشکده تخصصی ساخت ابزار با هوش مصنوعی به صورت مجازی و خدمات کدنویسی حرفه‌ای. منبعی برای خلاقیت و نوآوری در دنیای تکنولوژی.</p>
+                <a href="#registration" class="btn">ثبت نام در دوره‌ها</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <h2 class="section-title">دوره‌های تخصصی<span class="section-symbol">⟁</span></h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="course-title">دوره دیپ سیک ابلیس<span class="course-symbol">⟁</span></h3>
+                    <p class="course-desc">استفاده بهینه از دیپ سیک برای توسعه ابزارهای پیشرفته</p>
+                    <div class="course-price">340,000 تومان</div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="course-title">ابزار کاربردی AI<span class="course-symbol">⟁</span></h3>
+                    <p class="course-desc">آموزش ساخت و بهره‌برداری از ابزارهای مبتنی بر هوش مصنوعی</p>
+                    <div class="course-price">200,000 تومان</div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="course-title">ساخت وب کامل<span class="course-symbol">⟁</span></h3>
+                    <p class="course-desc">آموزش جامع توسعه وب از پایه تا پیشرفته با جدیدترین تکنولوژی‌ها</p>
+                    <div class="course-price">390,000 تومان</div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="course-title">جنگ افزار<span class="course-symbol">⟁</span></h3>
+                    <p class="course-desc">پک کامل آموزشی ساخت ابزارهای هجومی هک و امنیت سفید</p>
+                    <div class="course-price">390,000 تومان</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Registration Section -->
+    <section class="registration" id="registration">
+        <div class="container">
+            <h2 class="section-title">ثبت نام در دوره‌ها<span class="section-symbol">⟁</span></h2>
+            <div class="registration-form">
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="name">نام و نام خانوادگی</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">شماره تماس</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="course">انتخاب دوره</label>
+                        <select id="course" class="form-control" required>
+                            <option value="">-- لطفا دوره مورد نظر را انتخاب کنید --</option>
+                            <option value="دیپ سیک ابلیس - 340,000 تومان">دوره دیپ سیک ابلیس - 340,000 تومان</option>
+                            <option value="ابزار کاربردی AI - 200,000 تومان">دوره ابزار کاربردی AI - 200,000 تومان</option>
+                            <option value="ساخت وب کامل - 390,000 تومان">دوره ساخت وب کامل - 390,000 تومان</option>
+                            <option value="جنگ افزار - 390,000 تومان">دوره جنگ افزار - 390,000 تومان</option>
+                        </select>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="policy" required>
+                        <label for="policy">با <a href="#" id="policyLink">سیاست‌ها و شرایط سلب مسئولیت</a> آموزشگاه اختلال موافقم</label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">ثبت نام</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">اختلال<span class="footer-symbol">⟁</span></div>
+                <div class="copyright">
+                    <p>© 2023 آموزشگاه اختلال. تمامی حقوق محفوظ است.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Policy Modal -->
+    <div class="modal" id="policyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">سیاست‌ها و سلب مسئولیت<span class="modal-symbol">⟁</span></h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>با ثبت نام در دوره‌های آموزشگاه اختلال، شما با شرایط زیر موافقت می‌کنید:</p>
+                <p>1. تمامی آموزش‌های ارائه شده در این آموزشگاه صرفاً برای اهداف آموزشی و افزایش آگاهی در زمینه امنیت سایبری است.</p>
+                <p>2. استفاده از دانش کسب شده برای فعالیت‌های غیرقانونی یا مخرب کاملاً ممنوع است.</p>
+                <p>3. آموزشگاه اختلال هیچ گونه مسئولیتی در قبال استفاده نادرست از مطالب آموزشی ندارد.</p>
+                <p>4. شركت كنندگان متعهد مي‌شوند كه از اطلاعات ارائه شده فقط براي مقاصد قانوني و اخلاقي استفاده كنند.</p>
+                <p>5. تمامی محتوای آموزشی متعلق به آموزشگاه اختلال است و هرگونه کپی‌برداری بدون مجوز ممنوع است.</p>
+                <p>6. آموزشگاه در قبال هرگونه آسیب مستقیم یا غیرمستقیم ناشی از استفاده از آموزش‌ها مسئولیتی ندارد.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn close-modal">متوجه شدم</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Matrix Background
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+        const charArray = chars.split("");
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for(let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(10, 10, 10, 0.04)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = "#00ff41";
+            ctx.font = fontSize + "px monospace";
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+        
+        // Modal functionality
+        const policyModal = document.getElementById('policyModal');
+        const policyLink = document.getElementById('policyLink');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        
+        policyLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            policyModal.style.display = 'flex';
+        });
+        
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                policyModal.style.display = 'none';
+            });
+        });
+        
+        window.addEventListener('click', function(e) {
+            if(e.target === policyModal) {
+                policyModal.style.display = 'none';
+            }
+        });
+        
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const course = document.getElementById('course').value;
+            
+            // Show policy modal if not accepted
+            if(!document.getElementById('policy').checked) {
+                policyModal.style.display = 'flex';
+                return;
+            }
+            
+            // Send data to Telegram bot
+            const botToken = '8134831236:AAFnpgNSnE5sjvSS9TJVuGl0X51q175EuT0';
+            const chatId = '6940148096';
+            const message = `ثبت نام جدید:\nنام: ${name}\nشماره: ${phone}\nدوره: ${course}`;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.ok) {
+                    alert('ثبت نام شما با موفقیت انجام شد! به زودی با شما تماس گرفته خواهد شد.');
+                    document.getElementById('registrationForm').reset();
+                } else {
+                    alert('خطا در ارسال اطلاعات. لطفاً دوباره تلاش کنید.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('خطا در ارسال اطلاعات. لطفاً دوباره تلاش کنید.');
+            });
+        });
+        
+        // Show policy modal on first visit
+        window.addEventListener('load', function() {
+            if(!localStorage.getItem('policyAccepted')) {
+                setTimeout(() => {
+                    policyModal.style.display = 'flex';
+                }, 1000);
+            }
+        });
+        
+        // Store policy acceptance
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if(!localStorage.getItem('policyAccepted')) {
+                    localStorage.setItem('policyAccepted', 'true');
+                }
+            });
+        });
+        
+        // Responsive canvas
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
